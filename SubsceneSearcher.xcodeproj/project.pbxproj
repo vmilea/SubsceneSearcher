@@ -1,0 +1,350 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		714FF9E11F40CB3800690F8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 714FF9E01F40CB3800690F8F /* main.m */; };
+		714FF9EF1F40CB9300690F8F /* HTTPUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 714FF9E81F40CB9300690F8F /* HTTPUtil.m */; };
+		714FF9F01F40CB9300690F8F /* NSString+Trim.m in Sources */ = {isa = PBXBuildFile; fileRef = 714FF9EA1F40CB9300690F8F /* NSString+Trim.m */; };
+		714FF9F11F40CB9300690F8F /* SubsceneCrawler.m in Sources */ = {isa = PBXBuildFile; fileRef = 714FF9EC1F40CB9300690F8F /* SubsceneCrawler.m */; };
+		714FF9F21F40CB9300690F8F /* SubsceneModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 714FF9EE1F40CB9300690F8F /* SubsceneModel.m */; };
+		A6E144B84156B69554CAB978 /* libPods-SubsceneSearcher.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C86A3D986D9F2BB48CD84BC /* libPods-SubsceneSearcher.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		714FF9DB1F40CB3800690F8F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		6C86A3D986D9F2BB48CD84BC /* libPods-SubsceneSearcher.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SubsceneSearcher.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		714FF9DD1F40CB3800690F8F /* SubsceneSearcher */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SubsceneSearcher; sourceTree = BUILT_PRODUCTS_DIR; };
+		714FF9E01F40CB3800690F8F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		714FF9E71F40CB9300690F8F /* HTTPUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPUtil.h; sourceTree = "<group>"; };
+		714FF9E81F40CB9300690F8F /* HTTPUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPUtil.m; sourceTree = "<group>"; };
+		714FF9E91F40CB9300690F8F /* NSString+Trim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Trim.h"; sourceTree = "<group>"; };
+		714FF9EA1F40CB9300690F8F /* NSString+Trim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Trim.m"; sourceTree = "<group>"; };
+		714FF9EB1F40CB9300690F8F /* SubsceneCrawler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubsceneCrawler.h; sourceTree = "<group>"; };
+		714FF9EC1F40CB9300690F8F /* SubsceneCrawler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubsceneCrawler.m; sourceTree = "<group>"; };
+		714FF9ED1F40CB9300690F8F /* SubsceneModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubsceneModel.h; sourceTree = "<group>"; };
+		714FF9EE1F40CB9300690F8F /* SubsceneModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubsceneModel.m; sourceTree = "<group>"; };
+		9F0934E2E97FECA34C1CCD0E /* Pods-SubsceneSearcher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubsceneSearcher.release.xcconfig"; path = "Pods/Target Support Files/Pods-SubsceneSearcher/Pods-SubsceneSearcher.release.xcconfig"; sourceTree = "<group>"; };
+		DF385941B043A9026AF1851B /* Pods-SubsceneSearcher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubsceneSearcher.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SubsceneSearcher/Pods-SubsceneSearcher.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		714FF9DA1F40CB3800690F8F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6E144B84156B69554CAB978 /* libPods-SubsceneSearcher.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		714FF9D41F40CB3800690F8F = {
+			isa = PBXGroup;
+			children = (
+				714FF9F31F40CB9700690F8F /* Utilities */,
+				714FF9DF1F40CB3800690F8F /* SubsceneSearcher */,
+				714FF9DE1F40CB3800690F8F /* Products */,
+				9ECF4A14BCDF0A4C6CF9AEAF /* Pods */,
+				EB01A2D447F77A35C42A3584 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		714FF9DE1F40CB3800690F8F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				714FF9DD1F40CB3800690F8F /* SubsceneSearcher */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		714FF9DF1F40CB3800690F8F /* SubsceneSearcher */ = {
+			isa = PBXGroup;
+			children = (
+				714FF9E01F40CB3800690F8F /* main.m */,
+				714FF9EB1F40CB9300690F8F /* SubsceneCrawler.h */,
+				714FF9EC1F40CB9300690F8F /* SubsceneCrawler.m */,
+				714FF9ED1F40CB9300690F8F /* SubsceneModel.h */,
+				714FF9EE1F40CB9300690F8F /* SubsceneModel.m */,
+			);
+			path = SubsceneSearcher;
+			sourceTree = "<group>";
+		};
+		714FF9F31F40CB9700690F8F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				714FF9E71F40CB9300690F8F /* HTTPUtil.h */,
+				714FF9E81F40CB9300690F8F /* HTTPUtil.m */,
+				714FF9E91F40CB9300690F8F /* NSString+Trim.h */,
+				714FF9EA1F40CB9300690F8F /* NSString+Trim.m */,
+			);
+			name = Utilities;
+			path = SubsceneSearcher;
+			sourceTree = "<group>";
+		};
+		9ECF4A14BCDF0A4C6CF9AEAF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DF385941B043A9026AF1851B /* Pods-SubsceneSearcher.debug.xcconfig */,
+				9F0934E2E97FECA34C1CCD0E /* Pods-SubsceneSearcher.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		EB01A2D447F77A35C42A3584 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6C86A3D986D9F2BB48CD84BC /* libPods-SubsceneSearcher.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		714FF9DC1F40CB3800690F8F /* SubsceneSearcher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 714FF9E41F40CB3800690F8F /* Build configuration list for PBXNativeTarget "SubsceneSearcher" */;
+			buildPhases = (
+				1ED373D2835887F9627879B6 /* [CP] Check Pods Manifest.lock */,
+				714FF9D91F40CB3800690F8F /* Sources */,
+				714FF9DA1F40CB3800690F8F /* Frameworks */,
+				714FF9DB1F40CB3800690F8F /* CopyFiles */,
+				6390EA20EDEE37AEDFDE8506 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SubsceneSearcher;
+			productName = SubsceneSearcher;
+			productReference = 714FF9DD1F40CB3800690F8F /* SubsceneSearcher */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		714FF9D51F40CB3800690F8F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Valentin Milea";
+				TargetAttributes = {
+					714FF9DC1F40CB3800690F8F = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 714FF9D81F40CB3800690F8F /* Build configuration list for PBXProject "SubsceneSearcher" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 714FF9D41F40CB3800690F8F;
+			productRefGroup = 714FF9DE1F40CB3800690F8F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				714FF9DC1F40CB3800690F8F /* SubsceneSearcher */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1ED373D2835887F9627879B6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6390EA20EDEE37AEDFDE8506 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SubsceneSearcher/Pods-SubsceneSearcher-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		714FF9D91F40CB3800690F8F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				714FF9F11F40CB9300690F8F /* SubsceneCrawler.m in Sources */,
+				714FF9E11F40CB3800690F8F /* main.m in Sources */,
+				714FF9F01F40CB9300690F8F /* NSString+Trim.m in Sources */,
+				714FF9EF1F40CB9300690F8F /* HTTPUtil.m in Sources */,
+				714FF9F21F40CB9300690F8F /* SubsceneModel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		714FF9E21F40CB3800690F8F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		714FF9E31F40CB3800690F8F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		714FF9E51F40CB3800690F8F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF385941B043A9026AF1851B /* Pods-SubsceneSearcher.debug.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		714FF9E61F40CB3800690F8F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F0934E2E97FECA34C1CCD0E /* Pods-SubsceneSearcher.release.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		714FF9D81F40CB3800690F8F /* Build configuration list for PBXProject "SubsceneSearcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				714FF9E21F40CB3800690F8F /* Debug */,
+				714FF9E31F40CB3800690F8F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		714FF9E41F40CB3800690F8F /* Build configuration list for PBXNativeTarget "SubsceneSearcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				714FF9E51F40CB3800690F8F /* Debug */,
+				714FF9E61F40CB3800690F8F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 714FF9D51F40CB3800690F8F /* Project object */;
+}
