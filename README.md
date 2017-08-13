@@ -1,0 +1,2 @@
+# SubsceneSearcher
+Streamlined subtitle grabber
