@@ -17,7 +17,7 @@
 #import <Foundation/Foundation.h>
 #import "SubsceneModel.h"
 
-NSArray<MovieEntry *>* searchMovies(NSString *term);
+NSDictionary<NSString *, NSArray<MovieEntry *> *>* searchMovies(NSString *term);
 
 NSArray<SubtitleEntry *>* findSubtitlesForMovie(MovieEntry *movieEntry);
 

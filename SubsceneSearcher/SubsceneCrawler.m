@@ -36,45 +36,56 @@ static NSHTTPCookieStorage* subsceneCookieStorage()
     return sCookieStorage;
 }
 
-static NSArray<MovieEntry *>* parseMovieEntries(HTMLDocument *document)
+static NSDictionary<NSString *, NSArray<MovieEntry *> *>* parseMovieEntries(HTMLDocument *document)
 {
     HTMLElement *searchResultElement = [document firstNodeMatchingSelector:@"#content .search-result"];
     if (searchResultElement == nil) {
         return nil;
     }
 
-    NSMutableArray<MovieEntry *> *movieEntries = [NSMutableArray array];
-    HTMLElement *listElement = [searchResultElement firstNodeMatchingSelector:@"ul"];
-    for (HTMLElement *element in listElement.childElementNodes) {
-        MovieEntry *entry = [[MovieEntry alloc] init];
+    NSMutableDictionary<NSString *, NSMutableArray<MovieEntry *> *> *searchResult = [NSMutableDictionary dictionary];
+    NSString *category = @"Unclassified";
+    for (HTMLElement *element in searchResultElement.childElementNodes) {
+        if ([element.tagName hasPrefix:@"h"]) {
+            category = element.textContent;
+        } else if ([element.tagName isEqualToString:@"ul"]) {
+            for (HTMLElement *listItemElement in element.childElementNodes) {
+                MovieEntry *entry = [[MovieEntry alloc] init];
 
-        HTMLElement *anchorElement = [element firstNodeMatchingSelector:@"a"];
-        if (anchorElement != nil) {
-            entry.title = anchorElement.textContent;
-            NSString *href = anchorElement[@"href"];
-            if (href != nil) {
-                entry.url = [NSURL URLWithString:[kSubsceneHost stringByAppendingString:href]];
-            }
-        }
-        HTMLElement *countElement = [element firstNodeMatchingSelector:@".subtle"];
-        if (countElement != nil) {
-            NSString *content = countElement.textContent;
-            NSArray<NSString *> *tokens =  [content componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            for (NSString *token in tokens) {
-                if (token.length > 0) {
-                    NSInteger count = token.integerValue;
-                    if (count > 0) {
-                        entry.subtitleCount = count;
-                        break;
+                HTMLElement *anchorElement = [listItemElement firstNodeMatchingSelector:@"a"];
+                if (anchorElement != nil) {
+                    entry.title = anchorElement.textContent;
+                    NSString *href = anchorElement[@"href"];
+                    if (href != nil) {
+                        entry.url = [NSURL URLWithString:[kSubsceneHost stringByAppendingString:href]];
                     }
+                }
+                HTMLElement *countElement = [listItemElement firstNodeMatchingSelector:@".count"];
+                if (countElement != nil) {
+                    NSString *content = countElement.textContent;
+                    NSArray<NSString *> *tokens =  [content componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                    for (NSString *token in tokens) {
+                        if (token.length > 0) {
+                            NSInteger count = token.integerValue;
+                            if (count > 0) {
+                                entry.subtitleCount = count;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (entry.title != nil && entry.url != nil) {
+                    NSMutableArray<MovieEntry *> *categoryEntries = searchResult[category];
+                    if (categoryEntries == nil) {
+                        categoryEntries = [NSMutableArray array];
+                        searchResult[category] = categoryEntries;
+                    }
+                    [categoryEntries addObject:entry];
                 }
             }
         }
-        if (entry.title != nil && entry.url != nil) {
-            [movieEntries addObject:entry];
-        }
     }
-    return movieEntries;
+    return searchResult;
 }
 
 //static NSURL* parseIMDBLinkForSubtitles(HTMLDocument *document)
@@ -152,7 +163,7 @@ static NSURL* parseSubtitleLink(HTMLDocument *document)
 
 #pragma mark - public
 
-NSArray<MovieEntry *>* searchMovies(NSString *term)
+NSDictionary<NSString *, NSArray<MovieEntry *> *>* searchMovies(NSString *term)
 {
     NSArray<NSString *> *tokens = [term componentsSeparatedByCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
     NSMutableString *query = [NSMutableString stringWithFormat:@"%@/subtitles/title?q=", kSubsceneHost];
@@ -168,8 +179,8 @@ NSArray<MovieEntry *>* searchMovies(NSString *term)
     NSData *data = HTTP_urlGet(url, subsceneCookieStorage());
     HTMLDocument *document = [HTMLDocument documentWithData:data contentTypeHeader:nil];
 
-    NSArray<MovieEntry *> *movieEntries = parseMovieEntries(document);
-    return movieEntries;
+    NSDictionary<NSString *, NSArray<MovieEntry *> *> *searchResult = parseMovieEntries(document);
+    return searchResult;
 }
 
 NSArray<SubtitleEntry *>* findSubtitlesForMovie(MovieEntry *movieEntry)

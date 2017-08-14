@@ -26,35 +26,51 @@ static void wizard()
     NSString *searchTerm = [NSString stringWithUTF8String:buffer].stringByTrimmingWhitespaceAndNewline;
     printf("\n");
 
-    NSArray<MovieEntry *> *movieEntries = searchMovies(searchTerm);
-    if (movieEntries == nil) {
+    NSDictionary<NSString *, NSArray<MovieEntry *> *> *searchResult = searchMovies(searchTerm);
+    if (searchResult == nil) {
         fprintf(stderr, "ERROR: Movie lookup failed.\n");
         free(buffer);
         return;
     }
-    if (movieEntries.count == 0) {
+    if (searchResult.count == 0) {
         printf("No results found.\n");
         free(buffer);
         return;
     }
 
-    printf("Matches:\n");
-    size_t index = 1;
-    for (MovieEntry *entry in movieEntries) {
-        printf("%zu: '%s' (%zu subtitles)\n", index++, entry.title.UTF8String, (size_t)entry.subtitleCount);
+    size_t index = 0;
+    for (NSString *category in searchResult) {
+        printf("%s:\n", category.UTF8String);
+        for (MovieEntry *entry in searchResult[category]) {
+            printf("%zu: '%s' (%zu subtitles)\n", ++index, entry.title.UTF8String, (size_t)entry.subtitleCount);
+        }
+        printf("\n");
     }
-    printf("\n");
 
-    size_t movieIndex = 0;
+    size_t movieCount = index;
+    size_t selectedIndex = 0;
     do {
         printf("Select movie: ");
         getline(&buffer, &bufferCapacity, stdin);
-        movieIndex = (size_t)[NSString stringWithUTF8String:buffer].stringByTrimmingWhitespaceAndNewline.integerValue;
-    } while (movieIndex < 1 || movieEntries.count < movieIndex);
+        selectedIndex = (size_t)[NSString stringWithUTF8String:buffer].stringByTrimmingWhitespaceAndNewline.integerValue;
+    } while (selectedIndex < 1 || movieCount < selectedIndex);
     printf("\n");
 
-    MovieEntry *movieEntry = movieEntries[movieIndex - 1];
-    NSArray<SubtitleEntry *> *subtitleEntries = findSubtitlesForMovie(movieEntry);
+    MovieEntry *selectedMovieEntry;
+    index = 0;
+    for (NSString *category in searchResult) {
+        if (selectedMovieEntry != nil) {
+            break;
+        }
+        for (MovieEntry *entry in searchResult[category]) {
+            if (++index == selectedIndex) {
+                selectedMovieEntry = entry;
+                break;
+            }
+        }
+    }
+
+    NSArray<SubtitleEntry *> *subtitleEntries = findSubtitlesForMovie(selectedMovieEntry);
     if (subtitleEntries == nil) {
         fprintf(stderr, "ERROR: Subtitle lookup failed.\n");
         free(buffer);
@@ -67,27 +83,27 @@ static void wizard()
     }
 
     printf("Subtitles:\n");
-    index = 1;
+    index = 0;
     for (SubtitleEntry *entry in subtitleEntries) {
-        printf("%zu: '%s' (%s) by %s\n", index++, entry.title.UTF8String, entry.language.UTF8String, entry.uploader.UTF8String);
+        printf("%zu: '%s' (%s) by %s\n", ++index, entry.title.UTF8String, entry.language.UTF8String, entry.uploader.UTF8String);
     }
     printf("\n");
 
-    size_t subtitleIndex = 0;
+    selectedIndex = 0;
     do {
         printf("Select subtitle: ");
         getline(&buffer, &bufferCapacity, stdin);
-        subtitleIndex = (size_t)[NSString stringWithUTF8String:buffer].stringByTrimmingWhitespaceAndNewline.integerValue;
-    } while (subtitleIndex < 1 || subtitleEntries.count < subtitleIndex);
+        selectedIndex = (size_t)[NSString stringWithUTF8String:buffer].stringByTrimmingWhitespaceAndNewline.integerValue;
+    } while (selectedIndex < 1 || subtitleEntries.count < selectedIndex);
     printf("\n");
 
-    SubtitleEntry *subtitleEntry = subtitleEntries[subtitleIndex - 1];
-    NSData *subtitleArchive = downloadSubtitle(subtitleEntry);
+    SubtitleEntry *selectedSubtitleEntry = subtitleEntries[selectedIndex - 1];
+    NSData *subtitleArchive = downloadSubtitle(selectedSubtitleEntry);
 
-    NSString *filePath = [NSString stringWithFormat:@"%@.zip", subtitleEntry.title];
+    NSString *filePath = [NSString stringWithFormat:@"%@.zip", selectedSubtitleEntry.title];
     size_t duplicateIndex = 0;
     while ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-        filePath = [NSString stringWithFormat:@"%@ (%zu).zip", subtitleEntry.title, ++duplicateIndex];
+        filePath = [NSString stringWithFormat:@"%@ (%zu).zip", selectedSubtitleEntry.title, ++duplicateIndex];
     }
     if (![subtitleArchive writeToFile:filePath atomically:YES]) {
         fprintf(stderr, "ERROR: Couldn't save '%s'.\n", filePath.UTF8String);
