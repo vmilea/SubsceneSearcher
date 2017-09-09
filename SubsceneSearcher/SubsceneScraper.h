@@ -17,8 +17,25 @@
 #import <Foundation/Foundation.h>
 #import "SubsceneModel.h"
 
-NSDictionary<NSString *, NSArray<MovieEntry *> *>* searchMovies(NSString *term);
+#pragma mark - misc
 
-NSArray<SubtitleEntry *>* findSubtitlesForMovie(MovieEntry *movieEntry);
+typedef NS_ENUM(NSUInteger, SubsceneQueryResultKind)
+{
+    SubsceneQueryResultProductions,  // NSDictionary<NSString *, NSArray<ProductionEntry *> *>
+    SubsceneQueryResultSubtitles     // NSArray<SubtitleEntry *>
+};
+
+@interface SubsceneQueryResult : NSObject
+
+@property (nonatomic) SubsceneQueryResultKind kind;
+@property (nonatomic) id items;
+
+@end
+
+#pragma mark - scraper API
+
+SubsceneQueryResult* querySubscene(NSString *term);
+
+NSArray<SubtitleEntry *>* querySubtitlesForProduction(ProductionEntry *productionEntry);
 
 NSData* downloadSubtitle(SubtitleEntry *subtitleEntry);

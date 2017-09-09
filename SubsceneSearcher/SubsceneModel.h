@@ -16,7 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MovieEntry : NSObject
+@interface ProductionEntry : NSObject
 
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSUInteger subtitleCount;

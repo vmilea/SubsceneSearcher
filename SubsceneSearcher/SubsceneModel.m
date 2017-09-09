@@ -16,7 +16,7 @@
 
 #import "SubsceneModel.h"
 
-@implementation MovieEntry
+@implementation ProductionEntry
 
 @end
 

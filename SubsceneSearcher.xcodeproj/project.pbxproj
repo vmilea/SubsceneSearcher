@@ -10,7 +10,7 @@
 		714FF9E11F40CB3800690F8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 714FF9E01F40CB3800690F8F /* main.m */; };
 		714FF9EF1F40CB9300690F8F /* HTTPUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 714FF9E81F40CB9300690F8F /* HTTPUtil.m */; };
 		714FF9F01F40CB9300690F8F /* NSString+Trim.m in Sources */ = {isa = PBXBuildFile; fileRef = 714FF9EA1F40CB9300690F8F /* NSString+Trim.m */; };
-		714FF9F11F40CB9300690F8F /* SubsceneCrawler.m in Sources */ = {isa = PBXBuildFile; fileRef = 714FF9EC1F40CB9300690F8F /* SubsceneCrawler.m */; };
+		714FF9F11F40CB9300690F8F /* SubsceneScraper.m in Sources */ = {isa = PBXBuildFile; fileRef = 714FF9EC1F40CB9300690F8F /* SubsceneScraper.m */; };
 		714FF9F21F40CB9300690F8F /* SubsceneModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 714FF9EE1F40CB9300690F8F /* SubsceneModel.m */; };
 		A6E144B84156B69554CAB978 /* libPods-SubsceneSearcher.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C86A3D986D9F2BB48CD84BC /* libPods-SubsceneSearcher.a */; };
 /* End PBXBuildFile section */
@@ -35,8 +35,8 @@
 		714FF9E81F40CB9300690F8F /* HTTPUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPUtil.m; sourceTree = "<group>"; };
 		714FF9E91F40CB9300690F8F /* NSString+Trim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Trim.h"; sourceTree = "<group>"; };
 		714FF9EA1F40CB9300690F8F /* NSString+Trim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Trim.m"; sourceTree = "<group>"; };
-		714FF9EB1F40CB9300690F8F /* SubsceneCrawler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubsceneCrawler.h; sourceTree = "<group>"; };
-		714FF9EC1F40CB9300690F8F /* SubsceneCrawler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubsceneCrawler.m; sourceTree = "<group>"; };
+		714FF9EB1F40CB9300690F8F /* SubsceneScraper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubsceneScraper.h; sourceTree = "<group>"; };
+		714FF9EC1F40CB9300690F8F /* SubsceneScraper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubsceneScraper.m; sourceTree = "<group>"; };
 		714FF9ED1F40CB9300690F8F /* SubsceneModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubsceneModel.h; sourceTree = "<group>"; };
 		714FF9EE1F40CB9300690F8F /* SubsceneModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubsceneModel.m; sourceTree = "<group>"; };
 		9F0934E2E97FECA34C1CCD0E /* Pods-SubsceneSearcher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubsceneSearcher.release.xcconfig"; path = "Pods/Target Support Files/Pods-SubsceneSearcher/Pods-SubsceneSearcher.release.xcconfig"; sourceTree = "<group>"; };
@@ -78,8 +78,8 @@
 			isa = PBXGroup;
 			children = (
 				714FF9E01F40CB3800690F8F /* main.m */,
-				714FF9EB1F40CB9300690F8F /* SubsceneCrawler.h */,
-				714FF9EC1F40CB9300690F8F /* SubsceneCrawler.m */,
+				714FF9EB1F40CB9300690F8F /* SubsceneScraper.h */,
+				714FF9EC1F40CB9300690F8F /* SubsceneScraper.m */,
 				714FF9ED1F40CB9300690F8F /* SubsceneModel.h */,
 				714FF9EE1F40CB9300690F8F /* SubsceneModel.m */,
 			);
@@ -207,7 +207,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				714FF9F11F40CB9300690F8F /* SubsceneCrawler.m in Sources */,
+				714FF9F11F40CB9300690F8F /* SubsceneScraper.m in Sources */,
 				714FF9E11F40CB3800690F8F /* main.m in Sources */,
 				714FF9F01F40CB9300690F8F /* NSString+Trim.m in Sources */,
 				714FF9EF1F40CB9300690F8F /* HTTPUtil.m in Sources */,

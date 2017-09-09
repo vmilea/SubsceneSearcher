@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
-#import "SubsceneCrawler.h"
+#import "SubsceneScraper.h"
 #import "HTTPUtil.h"
 #import "NSString+Trim.h"
+
+@implementation SubsceneQueryResult
+
+@end
 
 #pragma mark - private
 
@@ -36,21 +40,16 @@ static NSHTTPCookieStorage* subsceneCookieStorage()
     return sCookieStorage;
 }
 
-static NSDictionary<NSString *, NSArray<MovieEntry *> *>* parseMovieEntries(HTMLDocument *document)
+static NSDictionary<NSString *, NSArray<ProductionEntry *> *>* parseCategorizedSearchResult(HTMLElement *searchResultElement)
 {
-    HTMLElement *searchResultElement = [document firstNodeMatchingSelector:@"#content .search-result"];
-    if (searchResultElement == nil) {
-        return nil;
-    }
-
-    NSMutableDictionary<NSString *, NSMutableArray<MovieEntry *> *> *searchResult = [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString *, NSMutableArray<ProductionEntry *> *> *searchResult = [NSMutableDictionary dictionary];
     NSString *category = @"Unclassified";
     for (HTMLElement *element in searchResultElement.childElementNodes) {
         if ([element.tagName hasPrefix:@"h"]) {
             category = element.textContent;
         } else if ([element.tagName isEqualToString:@"ul"]) {
             for (HTMLElement *listItemElement in element.childElementNodes) {
-                MovieEntry *entry = [[MovieEntry alloc] init];
+                ProductionEntry *entry = [[ProductionEntry alloc] init];
 
                 HTMLElement *anchorElement = [listItemElement firstNodeMatchingSelector:@"a"];
                 if (anchorElement != nil) {
@@ -75,7 +74,7 @@ static NSDictionary<NSString *, NSArray<MovieEntry *> *>* parseMovieEntries(HTML
                     }
                 }
                 if (entry.title != nil && entry.url != nil) {
-                    NSMutableArray<MovieEntry *> *categoryEntries = searchResult[category];
+                    NSMutableArray<ProductionEntry *> *categoryEntries = searchResult[category];
                     if (categoryEntries == nil) {
                         categoryEntries = [NSMutableArray array];
                         searchResult[category] = categoryEntries;
@@ -88,61 +87,53 @@ static NSDictionary<NSString *, NSArray<MovieEntry *> *>* parseMovieEntries(HTML
     return searchResult;
 }
 
-//static NSURL* parseIMDBLinkForSubtitles(HTMLDocument *document)
-//{
-//    HTMLElement *anchorElement = [document firstNodeMatchingSelector:@".subtitles .header a"];
-//    NSString *href = anchorElement[@"href"];
-//    if (href == nil) {
-//        return nil;
-//    } else {
-//        NSURL *url = [NSURL URLWithString:href];
-//        return url;
-//    }
-//}
-
-static NSArray<SubtitleEntry *>* parseSubtitleEntries(HTMLDocument *document)
+static SubtitleEntry* parseSubtitleEntry(HTMLElement *tableRowElement)
 {
-    HTMLElement *tableElement = [document firstNodeMatchingSelector:@".content tbody"];
-    if (tableElement == nil) {
+    SubtitleEntry *entry = [[SubtitleEntry alloc] init];
+    NSArray<HTMLElement *> *anchorElements = [tableRowElement nodesMatchingSelector:@"a"];
+    if (anchorElements.count > 0) {
+        HTMLElement *anchorElement = anchorElements[0];
+        NSString *href = anchorElement[@"href"];
+        if (href != nil) {
+            if ([href hasPrefix:@"http"]) {
+                //looks like an upload link, skip
+            } else {
+                entry.url = [NSURL URLWithString:[kSubsceneHost stringByAppendingString:href]];
+            }
+        }
+        NSArray<HTMLElement *> *subElements = [anchorElement nodesMatchingSelector:@"span"];
+        if (subElements.count > 0) {
+            entry.language = [subElements[0].textContent stringByTrimmingWhitespaceAndNewline];
+        }
+        if (subElements.count > 1) {
+            entry.title = [subElements[1].textContent stringByTrimmingWhitespaceAndNewline];
+        }
+    }
+    if (anchorElements.count > 1) {
+        HTMLElement *anchorElement = anchorElements[1];
+        entry.uploader = [anchorElement.textContent stringByTrimmingWhitespaceAndNewline];
+    }
+    HTMLElement *commentElement = [tableRowElement firstNodeMatchingSelector:@"div"];
+    if (commentElement != nil) {
+        entry.comment = [commentElement.textContent stringByTrimmingWhitespaceAndNewline];
+    }
+    return (entry.url != nil ? entry : nil);
+}
+
+static NSArray<SubtitleEntry *>* parseSubtitleTable(HTMLElement *tableElement)
+{
+    HTMLElement *tableBodyElement = [tableElement firstNodeMatchingSelector:@"tbody"];
+    if (tableBodyElement == nil) {
         return nil;
     }
-
     NSMutableArray<SubtitleEntry *> *subtitleEntries = [NSMutableArray array];
-    for (HTMLElement *rowElement in tableElement.childElementNodes) {
-        SubtitleEntry *entry = [[SubtitleEntry alloc] init];
-
-        NSArray<HTMLElement *> *anchorElements = [rowElement nodesMatchingSelector:@"a"];
-        if (anchorElements.count > 0) {
-            HTMLElement *anchorElement = anchorElements[0];
-            NSString *href = anchorElement[@"href"];
-            if (href != nil) {
-                if ([href hasPrefix:@"http"]) {
-                    //looks like an upload link, no subtitles found
-                    if (subtitleEntries.count == 0) {
-                        break;
-                    }
-                } else {
-                    entry.url = [NSURL URLWithString:[kSubsceneHost stringByAppendingString:href]];
-                }
+    for (HTMLElement *tableRowElement in tableBodyElement.childElementNodes) {
+        SubtitleEntry *entry = parseSubtitleEntry(tableRowElement);
+        if (entry == nil) {
+            if (subtitleEntries.count == 0) {
+                return nil; //assume invalid table format if the first entry is unparsable
             }
-            NSArray<HTMLElement *> *subElements = [anchorElement nodesMatchingSelector:@"span"];
-            if (subElements.count > 0) {
-                entry.language = [subElements[0].textContent stringByTrimmingWhitespaceAndNewline];
-            }
-            if (subElements.count > 1) {
-                entry.title = [subElements[1].textContent stringByTrimmingWhitespaceAndNewline];
-            }
-        }
-        if (anchorElements.count > 1) {
-            HTMLElement *anchorElement = anchorElements[1];
-            entry.uploader = [anchorElement.textContent stringByTrimmingWhitespaceAndNewline];
-        }
-        HTMLElement *commentElement = [rowElement firstNodeMatchingSelector:@"div"];
-        if (commentElement != nil) {
-            entry.comment = [commentElement.textContent stringByTrimmingWhitespaceAndNewline];
-        }
-
-        if (entry.url != nil) {
+        } else {
             [subtitleEntries addObject:entry];
         }
     }
@@ -163,7 +154,7 @@ static NSURL* parseSubtitleLink(HTMLDocument *document)
 
 #pragma mark - public
 
-NSDictionary<NSString *, NSArray<MovieEntry *> *>* searchMovies(NSString *term)
+SubsceneQueryResult* querySubscene(NSString *term)
 {
     NSArray<NSString *> *tokens = [term componentsSeparatedByCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
     NSMutableString *query = [NSMutableString stringWithFormat:@"%@/subtitles/title?q=", kSubsceneHost];
@@ -178,19 +169,39 @@ NSDictionary<NSString *, NSArray<MovieEntry *> *>* searchMovies(NSString *term)
     NSURL *url = [NSURL URLWithString:query];
     NSData *data = HTTP_urlGet(url, subsceneCookieStorage());
     HTMLDocument *document = [HTMLDocument documentWithData:data contentTypeHeader:nil];
-
-    NSDictionary<NSString *, NSArray<MovieEntry *> *> *searchResult = parseMovieEntries(document);
-    return searchResult;
+    HTMLElement *contentElement = [document firstNodeMatchingSelector:@"#content"];
+    if (contentElement == nil) {
+        return nil;
+    }
+    HTMLElement *searchResultElement = [contentElement firstNodeMatchingSelector:@".search-result"];
+    if (searchResultElement != nil) {
+        SubsceneQueryResult *result = [[SubsceneQueryResult alloc] init];
+        result.items = parseCategorizedSearchResult(searchResultElement);
+        result.kind = SubsceneQueryResultProductions;
+        return result;
+    }
+    HTMLElement *subtitleTableElement = [contentElement firstNodeMatchingSelector:@".content table"];
+    if (subtitleTableElement != nil) {
+        SubsceneQueryResult *result = [[SubsceneQueryResult alloc] init];
+        result.items = parseSubtitleTable(subtitleTableElement);
+        result.kind = SubsceneQueryResultSubtitles;
+        return result;
+    }
+    return nil;
 }
 
-NSArray<SubtitleEntry *>* findSubtitlesForMovie(MovieEntry *movieEntry)
+NSArray<SubtitleEntry *>* querySubtitlesForProduction(ProductionEntry *productionEntry)
 {
-    NSData *data = HTTP_urlGet(movieEntry.url, subsceneCookieStorage());
+    NSData *data = HTTP_urlGet(productionEntry.url, subsceneCookieStorage());
     if (data == nil) {
         return nil;
     }
     HTMLDocument *document = [HTMLDocument documentWithData:data contentTypeHeader:nil];
-    NSArray<SubtitleEntry *> *subtitleEntries = parseSubtitleEntries(document);
+    HTMLElement *subtitleTableElement = [document firstNodeMatchingSelector:@".content table"];
+    if (subtitleTableElement == nil) {
+        return nil;
+    }
+    NSArray<SubtitleEntry *> *subtitleEntries = parseSubtitleTable(subtitleTableElement);
     return subtitleEntries;
 }
 
